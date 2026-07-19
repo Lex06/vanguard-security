@@ -398,15 +398,19 @@
         <div class="info-item"><span>Hours</span><p>Operations room staffed 24/7</p></div>
         <div class="info-item"><span>Coverage</span><p>Serving the greater metro area</p></div>
       </div>
-      <form onsubmit="event.preventDefault();this.querySelector('.msg').style.display='block';this.reset();">
-        <div class="field"><label>Name</label><input required placeholder="Your name"></div>
-        <div class="field"><label>Email or phone</label><input required placeholder="How can we reach you?"></div>
+      <form id="contactForm">
+        <input type="hidden" name="access_key" value="3b767d81-4bbe-467e-a9b5-88307e6fbc36">
+        <input type="hidden" name="subject" value="New inquiry from Vanguard Security site">
+        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+        <div class="field"><label>Name</label><input name="name" required placeholder="Your name"></div>
+        <div class="field"><label>Email or phone</label><input name="contact" required placeholder="How can we reach you?"></div>
         <div class="field"><label>Service needed</label>
-          <select><option>On-site guarding</option><option>Location / premises security</option><option>Camera surveillance</option><option>Event security</option><option>Not sure — need advice</option></select>
+          <select name="service"><option>On-site guarding</option><option>Location / premises security</option><option>Camera surveillance</option><option>Event security</option><option>Not sure — need advice</option></select>
         </div>
-        <div class="field"><label>Message</label><textarea placeholder="Tell us about your site..."></textarea></div>
-        <button class="btn btn-primary">Send Request</button>
+        <div class="field"><label>Message</label><textarea name="message" placeholder="Tell us about your site..."></textarea></div>
+        <button class="btn btn-primary" type="submit">Send Request</button>
         <p class="msg" style="display:none;color:var(--accent2);margin-top:14px;font-size:14px">Thanks — we'll be in touch within one business day.</p>
+        <p class="msg-error" style="display:none;color:#ff8a8a;margin-top:14px;font-size:14px">Something went wrong — please try again or call us directly.</p>
       </form>
     </div>
   </div>
@@ -434,6 +438,37 @@
     var nav = document.getElementById('navLinks');
     if (nav.classList.contains('open')) toggleMenu();
   }
+
+  document.getElementById('contactForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+    var form = e.target;
+    var successMsg = form.querySelector('.msg');
+    var errorMsg = form.querySelector('.msg-error');
+    var btn = form.querySelector('button[type="submit"]');
+    successMsg.style.display = 'none';
+    errorMsg.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    try {
+      var res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      });
+      var result = await res.json();
+      if (result.success) {
+        successMsg.style.display = 'block';
+        form.reset();
+      } else {
+        errorMsg.style.display = 'block';
+      }
+    } catch (err) {
+      errorMsg.style.display = 'block';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Send Request';
+    }
+  });
 </script>
 
 </body>
