@@ -19,8 +19,8 @@
   .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
   .btn{display:inline-block;padding:13px 26px;border-radius:8px;font-weight:600;font-size:15px;
     transition:.2s;cursor:pointer;border:none}
-  .btn-primary{background:var(--platinum);color:#0a0a0b}
-  .btn-primary:hover{background:#ffffff}
+  .btn-primary{background:var(--platinum);color:#0a0a0b;box-shadow:0 0 0 0 var(--gold)}
+  .btn-primary:hover{background:var(--gold);box-shadow:0 0 0 3px rgba(200,162,74,.25)}
   .btn-ghost{border:1px solid var(--line);color:var(--text)}
   .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
 
@@ -31,8 +31,9 @@
   .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;letter-spacing:.3px}
   .logo .mark{width:30px;height:30px}
   .nav-links{display:flex;gap:30px;align-items:center}
-  .nav-links a{color:var(--muted);font-size:15px;font-weight:500}
-  .nav-links a:hover{color:var(--text)}
+  .nav-links a{color:var(--muted);font-size:15px;font-weight:500;transition:.2s}
+  .nav-links a:hover{color:var(--gold)}
+  .nav-links a.btn:hover{color:#0a0a0b}
   .menu-btn{display:none;background:none;border:none;color:var(--text);font-size:26px;cursor:pointer}
 
   /* Hero */
