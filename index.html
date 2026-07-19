@@ -12,7 +12,7 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  html,body{overflow-x:hidden;max-width:100%}
+  body{overflow-x:clip;max-width:100%}
   body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     background:var(--bg);color:var(--text);line-height:1.6}
   a{color:inherit;text-decoration:none}
@@ -29,6 +29,8 @@
     backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
   .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
   .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;letter-spacing:.3px}
+  .logo-link{display:flex;align-items:center;gap:10px;transition:.2s}
+  .logo-link:hover{color:var(--gold)}
   .logo .mark{width:30px;height:30px}
   .nav-links{display:flex;gap:30px;align-items:center}
   .nav-links a{color:var(--muted);font-size:15px;font-weight:500;transition:.2s}
@@ -72,11 +74,15 @@
   .head p{color:var(--muted);font-size:17px}
 
   .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-  .cat-label{display:flex;align-items:center;gap:14px;margin-bottom:22px;flex-wrap:wrap}
+  .cat summary{list-style:none}
+  .cat summary::-webkit-details-marker{display:none}
+  .cat-label{display:flex;align-items:center;gap:14px;margin-bottom:22px;flex-wrap:wrap;cursor:pointer}
   .cat-label .tag{width:40px;height:40px;flex:none;border:1px solid var(--line);border-radius:9px;
     display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:var(--muted)}
   .cat-label h3{font-size:21px;font-weight:700}
   .cat-label p{color:var(--muted);font-size:15px;margin-left:auto;max-width:340px}
+  .cat-arrow{color:var(--muted);font-size:16px;transition:.2s;flex:none}
+  .cat[open] .cat-arrow{transform:rotate(180deg);color:var(--gold)}
   .new-badge{font-size:11px;color:var(--gold);border:1px solid var(--gold);border-radius:999px;
     padding:2px 9px;vertical-align:middle;margin-left:6px;font-weight:700;letter-spacing:.5px}
   .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:30px;
@@ -87,6 +93,24 @@
     display:flex;align-items:center;justify-content:center;margin-bottom:18px}
   .card h3{font-size:19px;margin-bottom:8px}
   .card p{color:var(--muted);font-size:15px}
+
+  /* How it works */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;position:relative}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:30px;position:relative}
+  .step-num{width:38px;height:38px;border-radius:50%;background:var(--gold);color:#0a0a0b;
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;margin-bottom:16px}
+  .step h3{font-size:19px;margin-bottom:8px}
+  .step p{color:var(--muted);font-size:15px}
+
+  /* FAQ */
+  .faq-list{display:grid;gap:12px;max-width:800px}
+  .faq-item{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 24px}
+  .faq-item summary{cursor:pointer;font-weight:600;font-size:16px;list-style:none;
+    display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::after{content:"+";font-size:22px;color:var(--muted);flex:none;transition:.2s}
+  .faq-item[open] summary::after{content:"−";color:var(--gold)}
+  .faq-item p{color:var(--muted);font-size:15px;margin-top:14px;line-height:1.6}
 
   /* Surveillance feature */
   .feature{background:linear-gradient(135deg,var(--bg2),var(--card));
@@ -138,7 +162,7 @@
     .nav-links a{width:100%;padding:12px 0;border-bottom:1px solid var(--line)}
     .nav-links a.btn{width:auto;margin-top:14px;border-bottom:none;text-align:center}
     .menu-btn{display:block}
-    .grid,.feature,.contact-grid{grid-template-columns:1fr}
+    .grid,.feature,.contact-grid,.steps{grid-template-columns:1fr}
     .feature{padding:32px}.stats{grid-template-columns:1fr}
     section{padding:56px 0}
     .hero-watermark .wing{display:none}
@@ -160,8 +184,10 @@
 <header>
   <div class="wrap nav">
     <div class="logo">
-      <svg class="mark" viewBox="0 0 24 24" fill="none"><path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5l8-3z" fill="#e5e4e2"/><path d="M9 12l2 2 4-4" stroke="#04121f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Vanguard Security Inc
+      <a href="#" class="logo-link" aria-label="Vanguard Security Inc — Home">
+        <svg class="mark" viewBox="0 0 24 24" fill="none"><path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5l8-3z" fill="#e5e4e2"/><path d="M9 12l2 2 4-4" stroke="#04121f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Vanguard Security Inc
+      </a>
       <div class="social">
         <a href="#" target="_blank" rel="noopener" aria-label="Instagram">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.8"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg>
@@ -206,79 +232,79 @@
       <p>Our core work is protecting the people and premises of businesses. Our newest line — camera surveillance — is available to both companies and homes.</p>
     </div>
 
-    <div class="cat-label"><span class="tag">01</span><h3>People &amp; Premises Security</h3><p>Trained guards protecting your staff, visitors and sites — built for businesses.</p></div>
-    <div class="grid">
-      <div class="card">
-        <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2l7 3v6c0 4.5-3 7.5-7 9.5C8 18.5 5 15.5 5 11V5l7-3z" stroke="#e5e4e2" stroke-width="1.8"/></svg></div>
-        <h3>On-Site Guarding</h3>
-        <p>Licensed, uniformed guards providing a visible deterrent and immediate response at your location.</p>
+    <details class="cat" open>
+      <summary class="cat-label"><span class="tag">01</span><h3>People &amp; Premises Security</h3><p>Trained guards protecting your staff, visitors and sites — built for businesses.</p><span class="cat-arrow">▾</span></summary>
+      <div class="grid">
+        <div class="card">
+          <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2l7 3v6c0 4.5-3 7.5-7 9.5C8 18.5 5 15.5 5 11V5l7-3z" stroke="#e5e4e2" stroke-width="1.8"/></svg></div>
+          <h3>On-Site Guarding</h3>
+          <p>Licensed, uniformed guards providing a visible deterrent and immediate response at your location.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-7 9 7M5 10v10h14V10" stroke="#e5e4e2" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
+          <h3>Location &amp; Premises Security</h3>
+          <p>Patrols, perimeter checks and access control tailored to commercial, retail and residential sites.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 3v18M3 12h18" stroke="#e5e4e2" stroke-width="1.8"/><circle cx="12" cy="12" r="9" stroke="#e5e4e2" stroke-width="1.8"/></svg></div>
+          <h3>Event Security</h3>
+          <p>Crowd management and asset protection for events of any size, planned end to end.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="3" stroke="#e5e4e2" stroke-width="1.8"/><path d="M9 12l2 2 4-4" stroke="#e5e4e2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Access Control</h3>
+          <p>Manage who comes and goes with entry management, visitor logging and gate security.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#e5e4e2" stroke-width="1.8"/><path d="M12 7v5l3 2" stroke="#e5e4e2" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <h3>Rapid Response</h3>
+          <p>Mobile units and alarm response ready to act the moment an incident is detected.</p>
+        </div>
       </div>
-      <div class="card">
-        <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-7 9 7M5 10v10h14V10" stroke="#e5e4e2" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
-        <h3>Location &amp; Premises Security</h3>
-        <p>Patrols, perimeter checks and access control tailored to commercial, retail and residential sites.</p>
-      </div>
-      <div class="card">
-        <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 3v18M3 12h18" stroke="#e5e4e2" stroke-width="1.8"/><circle cx="12" cy="12" r="9" stroke="#e5e4e2" stroke-width="1.8"/></svg></div>
-        <h3>Event Security</h3>
-        <p>Crowd management and asset protection for events of any size, planned end to end.</p>
-      </div>
-      <div class="card">
-        <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="3" stroke="#e5e4e2" stroke-width="1.8"/><path d="M9 12l2 2 4-4" stroke="#e5e4e2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <h3>Access Control</h3>
-        <p>Manage who comes and goes with entry management, visitor logging and gate security.</p>
-      </div>
-      <div class="card">
-        <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#e5e4e2" stroke-width="1.8"/><path d="M12 7v5l3 2" stroke="#e5e4e2" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-        <h3>Rapid Response</h3>
-        <p>Mobile units and alarm response ready to act the moment an incident is detected.</p>
-      </div>
-    </div>
+    </details>
 
-    <div class="cat-label" style="margin-top:48px"><span class="tag" style="border-color:var(--gold);color:var(--gold)">02</span><h3>Surveillance &amp; Monitoring <span class="new-badge">NEW</span></h3><p>Camera installation for both businesses and homes — 24/7 eyes on your property.</p></div>
-    <div class="grid">
-      <div class="card" style="border-color:var(--gold)">
-        <div class="ico" style="background:rgba(201,201,207,.12)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M2 8l6 3-6 3V8z" fill="#c9c9cf"/><rect x="8" y="7" width="14" height="10" rx="2" stroke="#c9c9cf" stroke-width="1.8"/></svg></div>
-        <h3>Camera Installation</h3>
-        <p>HD and night-vision CCTV designed and installed to cover every angle of your premises.</p>
+    <details class="cat" style="margin-top:24px" open>
+      <summary class="cat-label"><span class="tag" style="border-color:var(--gold);color:var(--gold)">02</span><h3>Surveillance &amp; Monitoring <span class="new-badge">NEW</span></h3><p>Camera installation for both businesses and homes — 24/7 eyes on your property.</p><span class="cat-arrow">▾</span></summary>
+      <div class="grid">
+        <div class="card">
+          <div class="ico" style="background:rgba(201,201,207,.12)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M2 8l6 3-6 3V8z" fill="#c9c9cf"/><rect x="8" y="7" width="14" height="10" rx="2" stroke="#c9c9cf" stroke-width="1.8"/></svg></div>
+          <h3>Camera Installation</h3>
+          <p>HD and night-vision CCTV designed and installed to cover every angle of your premises.</p>
+        </div>
+        <div class="card">
+          <div class="ico" style="background:rgba(201,201,207,.12)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="#c9c9cf" stroke-width="1.8"/><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" stroke="#c9c9cf" stroke-width="1.8"/></svg></div>
+          <h3>Live Remote Monitoring</h3>
+          <p>Our operations room watches your feeds 24/7 and responds the moment something looks wrong.</p>
+        </div>
+        <div class="card">
+          <div class="ico" style="background:rgba(201,201,207,.12)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9z" stroke="#c9c9cf" stroke-width="1.8" stroke-linejoin="round"/><path d="M10 21a2 2 0 004 0" stroke="#c9c9cf" stroke-width="1.8"/></svg></div>
+          <h3>Smart Alerts &amp; Cloud Recording</h3>
+          <p>Motion alerts to your phone plus cloud storage so footage is always there when you need it.</p>
+        </div>
       </div>
-      <div class="card">
-        <div class="ico" style="background:rgba(201,201,207,.12)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="#c9c9cf" stroke-width="1.8"/><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" stroke="#c9c9cf" stroke-width="1.8"/></svg></div>
-        <h3>Live Remote Monitoring</h3>
-        <p>Our operations room watches your feeds 24/7 and responds the moment something looks wrong.</p>
-      </div>
-      <div class="card">
-        <div class="ico" style="background:rgba(201,201,207,.12)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9z" stroke="#c9c9cf" stroke-width="1.8" stroke-linejoin="round"/><path d="M10 21a2 2 0 004 0" stroke="#c9c9cf" stroke-width="1.8"/></svg></div>
-        <h3>Smart Alerts &amp; Cloud Recording</h3>
-        <p>Motion alerts to your phone plus cloud storage so footage is always there when you need it.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section id="surveillance">
-  <div class="wrap">
-    <div class="feature">
-      <div>
-        <div class="eyebrow">New service</div>
-        <h2>Surveillance that never blinks</h2>
-        <p>We now design, install and monitor smart CCTV systems for both businesses and homes — giving you a live view of your property and a recorded trail whenever you need it.</p>
-        <ul class="flist">
-          <li>Installation for offices, sites and private homes</li>
-          <li>HD & night-vision camera installation</li>
-          <li>Live 24/7 remote monitoring by our team</li>
-          <li>Motion alerts sent straight to your phone</li>
-          <li>Cloud recording and easy footage retrieval</li>
-          <li>Integrates with your existing guarding plan</li>
-        </ul>
-        <a href="#contact" class="btn btn-primary" style="margin-top:26px">Add Surveillance</a>
+      <div class="feature" id="surveillance" style="margin-top:32px">
+        <div>
+          <div class="eyebrow">New service</div>
+          <h2>Surveillance that never blinks</h2>
+          <p>We now design, install and monitor smart CCTV systems for both businesses and homes — giving you a live view of your property and a recorded trail whenever you need it.</p>
+          <ul class="flist">
+            <li>Installation for offices, sites and private homes</li>
+            <li>HD & night-vision camera installation</li>
+            <li>Live 24/7 remote monitoring by our team</li>
+            <li>Motion alerts sent straight to your phone</li>
+            <li>Cloud recording and easy footage retrieval</li>
+            <li>Integrates with your existing guarding plan</li>
+          </ul>
+          <a href="#contact" class="btn btn-primary" style="margin-top:26px">Add Surveillance</a>
+        </div>
+        <div class="cam">
+          <div class="rec"><span class="dot"></span>REC</div>
+          <div class="scan"></div>
+          <svg width="72" height="72" viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="14" height="12" rx="2" stroke="#e5e4e2" stroke-width="1.5"/><path d="M16 10l6-3v10l-6-3" stroke="#e5e4e2" stroke-width="1.5" stroke-linejoin="round"/><circle cx="9" cy="12" r="2.5" stroke="#c9c9cf" stroke-width="1.5"/></svg>
+        </div>
       </div>
-      <div class="cam">
-        <div class="rec"><span class="dot"></span>REC</div>
-        <div class="scan"></div>
-        <svg width="72" height="72" viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="14" height="12" rx="2" stroke="#e5e4e2" stroke-width="1.5"/><path d="M16 10l6-3v10l-6-3" stroke="#e5e4e2" stroke-width="1.5" stroke-linejoin="round"/><circle cx="9" cy="12" r="2.5" stroke="#c9c9cf" stroke-width="1.5"/></svg>
-      </div>
-    </div>
+    </details>
   </div>
 </section>
 
@@ -293,6 +319,64 @@
       <div class="card"><h3>Fully Licensed & Insured</h3><p>Compliant, accredited and covered — so you carry none of the risk.</p></div>
       <div class="card"><h3>Trained Personnel</h3><p>Background-checked guards with ongoing training in response and de-escalation.</p></div>
       <div class="card"><h3>One Point of Contact</h3><p>A dedicated account manager who knows your site and answers when you call.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Getting started</div>
+      <h2>How it works</h2>
+      <p>From first call to boots on the ground (or cameras on the wall), here's what to expect.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Free Assessment</h3>
+        <p>We walk your site (or review your footprint) and identify the real risks — no generic template.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Custom Plan</h3>
+        <p>You get a proposal built for your site: guard coverage, camera placement, or both — with clear pricing.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Deployment</h3>
+        <p>Guards on-site or cameras installed and live-monitored, usually within days of sign-off.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Questions</div>
+      <h2>Frequently asked questions</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>How quickly can you respond to an incident?</summary>
+        <p>Our operations room is staffed 24/7, and mobile units are dispatched the moment an alarm or alert comes in — typical response time is under 15 minutes in our coverage area.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Do I need a long-term contract?</summary>
+        <p>No. We offer flexible terms including short-term and event-based coverage, alongside standard ongoing contracts for sites that want ongoing protection.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I get cameras without hiring guards, or guards without cameras?</summary>
+        <p>Yes — the two services are independent. Many clients start with one and add the other later; they're designed to integrate if you want both.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How is footage stored, and can I access it remotely?</summary>
+        <p>Footage is stored securely in the cloud with a defined retention window, and you can view live or recorded footage remotely from your phone or computer.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Are your guards licensed and insured?</summary>
+        <p>Yes — every guard is licensed, background-checked and covered under our insurance, so you carry none of the liability.</p>
+      </details>
     </div>
   </div>
 </section>
